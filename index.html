@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean Agile Financial Forecasting — Portfolio Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #68c7ff;
+  --surface: #7dcfff;
+  --surface2: #92d8ff;
+  --surface3: #a7e0ff;
+  --border: #4db8f5;
+  --border-strong: #35a8ee;
+  --text: #003c6b;
+  --text-muted: #1a5a8a;
+  --text-dim: #2e6e9e;
+  --pink: #f5c8d8;
+  --pink-light: #F8D0DF;
+  --pink-border: #ECA8C0;
+  --green: #3a9e6e;
+  --green-bg: #a8ddc0;
+  --green-border: #68c098;
+  --green-dark: #1a6b44;
+  --amber: #b07010;
+  --amber-bg: #f0d888;
+  --amber-border: #c89830;
+  --purple: #7c5cbf;
+  --purple-bg: #d8ccf0;
+  --purple-border: #a890d8;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Poppins', sans-serif;
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+
+.hero { padding: 64px 24px 40px; max-width: 1000px; margin: 0 auto; }
+.eyebrow { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; color: #003c6b; background: var(--pink); border: 1px solid var(--pink-border); border-radius: 20px; padding: 4px 12px; margin-bottom: 20px; letter-spacing: .04em; }
+.hero h1 { font-size: clamp(26px,4vw,44px); font-weight: 600; line-height: 1.15; letter-spacing: -.02em; color: #003c6b; margin-bottom: 12px; }
+.hero h1 span { color: var(--pink-light); }
+.hero p { font-size: 15px; color: var(--text-muted); max-width: 660px; line-height: 1.7; margin-bottom: 28px; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font-size: 12px; font-family: var(--mono); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border-strong); color: var(--text-muted); background: var(--surface); }
+
+.about { max-width: 1000px; margin: 0 auto; padding: 0 24px 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.about-card { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); padding: 20px; }
+.about-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #003c6b; }
+.about-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.about-card li { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.about-card li i { color: var(--pink-light); font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+.stack-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-family: var(--mono); padding: 4px 10px; border-radius: var(--radius); border: 1px solid var(--border-strong); color: var(--text-muted); background: var(--surface2); margin: 3px; }
+.stack-pill i { font-size: 12px; color: var(--pink-light); }
+
+.demo-section { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
+.section-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+
+.controls-bar { background: var(--surface2); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); padding: 10px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ctrl-desc { flex: 1; font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+.btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 16px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--surface2); color: #003c6b; font-size: 12px; font-family: var(--sans); cursor: pointer; transition: background .15s; }
+.btn:hover { background: var(--surface3); }
+.btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+.btn-primary { background: var(--pink); border-color: var(--pink-border); }
+.btn-primary:hover { background: #f0b0c8; }
+
+.window { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); overflow: hidden; }
+.window-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+.win-dots { display: flex; gap: 5px; }
+.win-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ffb3b3; } .dot-a { background: #ffdda0; } .dot-g { background: #b3e8c8; }
+.win-title { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+.win-badge { margin-left: auto; font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 20px; background: var(--pink); color: #003c6b; border: 1px solid var(--pink-border); }
+
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.panel { background: var(--surface); display: flex; flex-direction: column; }
+.panel-head { padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-family: var(--mono); background: var(--surface2); }
+.panel-dot { width: 7px; height: 7px; border-radius: 50%; }
+.panel-body { padding: 14px; flex: 1; min-height: 460px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+
+.chat-log { display: flex; flex-direction: column; gap: 9px; flex: 1; }
+.bubble { font-size: 12px; line-height: 1.55; padding: 9px 12px; border-radius: 8px; max-width: 92%; opacity: 0; transform: translateY(5px); transition: opacity .3s ease, transform .3s ease; }
+.bubble.visible { opacity: 1; transform: none; }
+.bubble.user { align-self: flex-end; background: var(--pink); border: 1px solid var(--pink-border); color: #003c6b; font-family: var(--mono); border-bottom-right-radius: 2px; }
+.bubble.agent { align-self: flex-start; background: #7dcfff; border: 1px solid var(--border-strong); color: #003c6b; border-bottom-left-radius: 2px; }
+
+.typing { display: inline-flex; gap: 3px; align-items: center; height: 14px; }
+.typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--text-dim); animation: bounce 1s infinite; }
+.typing span:nth-child(2) { animation-delay: .15s; }
+.typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
+
+.skill-log { display: flex; flex-direction: column; gap: 5px; }
+.skill-row { display: flex; align-items: center; gap: 8px; font-size: 11px; font-family: var(--mono); color: #003c6b; opacity: 0; transition: opacity .25s ease; }
+.skill-row.visible { opacity: 1; }
+.skill-row i { font-size: 13px; color: var(--text-dim); }
+.skill-status { margin-left: auto; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-family: var(--mono); }
+.sk-run { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.sk-done { background: var(--green-bg); color: var(--green-dark); border: 1px solid var(--green-border); }
+.sk-cache { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+/* Right panel: calculation + CSV */
+.calc-placeholder { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-dim); font-size: 12px; font-family: var(--mono); }
+.calc-placeholder i { font-size: 30px; }
+
+.calc-content { display: none; flex-direction: column; gap: 12px; opacity: 0; transition: opacity .4s ease; }
+.calc-content.visible { display: flex; opacity: 1; }
+
+.r-section-label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .08em; }
+
+/* Allocation logic visual */
+.alloc-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease; }
+.alloc-card.visible { opacity: 1; transform: none; }
+.alloc-team { font-size: 11px; font-weight: 600; color: #003c6b; font-family: var(--mono); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.alloc-row { display: flex; align-items: center; gap: 8px; font-size: 10px; font-family: var(--mono); color: var(--text-muted); margin-bottom: 4px; }
+.alloc-proj { min-width: 72px; }
+.alloc-track { flex: 1; height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.alloc-fill { height: 100%; border-radius: 3px; width: 0%; transition: width 1s cubic-bezier(.4,0,.2,1); }
+.alloc-pct { min-width: 34px; text-align: right; font-weight: 600; color: #003c6b; }
+
+/* Spreadsheet output */
+.ss-window { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-strong); opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease; background: #fff; }
+.ss-window.visible { opacity: 1; transform: none; }
+.ss-bar { background: #1a7043; padding: 6px 10px; display: flex; align-items: center; gap: 6px; }
+.ss-bar i { color: #fff; font-size: 13px; }
+.ss-bar-title { font-size: 10px; color: rgba(255,255,255,0.9); font-family: var(--mono); }
+.ss-bar-dl { margin-left: auto; font-size: 9px; font-family: var(--mono); color: #fff; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 1px 8px; border-radius: 3px; }
+
+.ss-table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 10px; }
+.ss-table th { background: #eef2f7; color: #444; font-weight: 600; padding: 5px 8px; border: 1px solid #d5dbe3; text-align: right; font-size: 9px; }
+.ss-table th:first-child { text-align: left; }
+.ss-table td { padding: 5px 8px; border: 1px solid #d5dbe3; color: #222; text-align: right; background: #fff; }
+.ss-table td:first-child { text-align: left; font-weight: 500; }
+.ss-table tr { opacity: 0; transition: opacity .3s ease; }
+.ss-table tr.visible { opacity: 1; }
+.ss-forecast-col { background: #fef3c7 !important; font-weight: 600; color: #92400e !important; }
+.ss-forecast-hdr { background: #fde68a !important; color: #92400e !important; }
+.ss-total-row td { background: #eef2f7; font-weight: 600; }
+
+footer { max-width: 1080px; margin: 0 auto; border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+
+@media (max-width: 760px) {
+  .panels { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bubble, .skill-row, .alloc-card, .csv-window, .csv-line, .calc-content { transition: none; }
+  .typing span { animation: none; }
+  .alloc-fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="eyebrow"><i class="ti ti-chart-line"></i> Portfolio project</div>
+  <h1>AI financial<br><span>forecasting agent</span></h1>
+  <p>A conversational agent that generates project-level monthly financial forecasts from Jira story point data. It combines an exported Jira dashboard filter, an MCP-cached hours-per-story-point estimation skill built on historical data, and finance-provided headcount capacity — allocating team hours to projects proportional to remaining incomplete story points.</p>
+  <div class="hero-tags">
+    <span class="tag"><i class="ti ti-brand-github"></i> Copilot</span>
+    <span class="tag">Jira dashboard export</span>
+    <span class="tag">MCP cached skill</span>
+    <span class="tag">Hours / story point</span>
+    <span class="tag">Capacity allocation</span>
+    <span class="tag">Monthly forecast xlsx</span>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-card">
+    <h3>How the allocation logic works</h3>
+    <ul>
+      <li><i class="ti ti-arrow-right"></i> A saved Jira filter is exported from the team dashboard — every open story with points, project, and status</li>
+      <li><i class="ti ti-arrow-right"></i> An independent estimation skill computes hours-per-story-point from historical Jira completion data — cached via MCP so it's reused across forecasts without recomputing</li>
+      <li><i class="ti ti-arrow-right"></i> Remaining effort per project = incomplete story points × hours per point</li>
+      <li><i class="ti ti-arrow-right"></i> Team capacity for the month splits proportionally: if Project A holds 90% of a team's remaining points and Project B holds 10%, then 90% of that team's hours forecast to A</li>
+      <li><i class="ti ti-arrow-right"></i> Headcount capacity comes from finance, assumed from previous forecast averages unless the user flags a material change</li>
+    </ul>
+  </div>
+  <div class="about-card">
+    <h3>Why this matters</h3>
+    <ul>
+      <li><i class="ti ti-arrow-right"></i> Monthly forecasting went from a multi-hour spreadsheet exercise to a single conversational prompt</li>
+      <li><i class="ti ti-arrow-right"></i> Hour allocations are grounded in actual delivery data rather than gut-feel percentage splits</li>
+      <li><i class="ti ti-arrow-right"></i> The MCP-cached estimation skill means historical analysis runs once and serves every subsequent forecast</li>
+      <li><i class="ti ti-arrow-right"></i> Finance receives a consistent monthly spreadsheet — Jan–Apr actuals alongside the May forecast, same format every month</li>
+    </ul>
+    <div style="margin-top:14px">
+      <span class="stack-pill"><i class="ti ti-brand-github"></i>Copilot</span>
+      <span class="stack-pill"><i class="ti ti-database"></i>MCP cache</span>
+      <span class="stack-pill"><i class="ti ti-api"></i>Jira data</span>
+      <span class="stack-pill"><i class="ti ti-file-spreadsheet"></i>Forecast xlsx</span>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <div class="section-label">// interactive demo — click "run demo" to watch the forecast generate</div>
+
+  <div class="controls-bar">
+    <span class="ctrl-desc" id="stepDesc">click "run demo" to begin</span>
+    <button class="btn" onclick="resetDemo()"><i class="ti ti-refresh" style="font-size:13px"></i> Restart</button>
+    <button class="btn btn-primary" id="runBtn" onclick="runDemo()"><i class="ti ti-player-play" style="font-size:13px"></i> Run demo</button>
+  </div>
+
+  <div class="window">
+    <div class="window-bar">
+      <div class="win-dots"><div class="win-dot dot-r"></div><div class="win-dot dot-a"></div><div class="win-dot dot-g"></div></div>
+      <span class="win-title">copilot — financial forecasting agent</span>
+      <span class="win-badge">live simulation</span>
+    </div>
+
+    <div class="panels">
+
+      <!-- Left: chat -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-dot" style="background:var(--pink-light)"></div>
+          Copilot chat
+        </div>
+        <div class="panel-body">
+          <div class="chat-log" id="chat"></div>
+        </div>
+      </div>
+
+      <!-- Right: calculation + CSV -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-dot" style="background:var(--green)"></div>
+          Forecast output
+        </div>
+        <div class="panel-body">
+          <div class="calc-placeholder" id="calc-placeholder">
+            <i class="ti ti-file-spreadsheet"></i>
+            <span>Forecast renders here</span>
+          </div>
+
+          <div class="calc-content" id="calc-content">
+
+            <div class="r-section-label">Capacity allocation — by remaining story points</div>
+
+            <div class="alloc-card" id="ac1">
+              <div class="alloc-team"><i class="ti ti-users" style="font-size:12px"></i> Team Falcon · 640 hrs capacity</div>
+              <div class="alloc-row">
+                <span class="alloc-proj">Project A</span>
+                <div class="alloc-track"><div class="alloc-fill" id="af1" style="background:var(--green)"></div></div>
+                <span class="alloc-pct" id="ap1">0%</span>
+              </div>
+              <div class="alloc-row">
+                <span class="alloc-proj">Project B</span>
+                <div class="alloc-track"><div class="alloc-fill" id="af2" style="background:var(--amber-bg); background:#e8c060"></div></div>
+                <span class="alloc-pct" id="ap2">0%</span>
+              </div>
+            </div>
+
+            <div class="alloc-card" id="ac2">
+              <div class="alloc-team"><i class="ti ti-users" style="font-size:12px"></i> Team Osprey · 480 hrs capacity</div>
+              <div class="alloc-row">
+                <span class="alloc-proj">Project A</span>
+                <div class="alloc-track"><div class="alloc-fill" id="af3" style="background:var(--green)"></div></div>
+                <span class="alloc-pct" id="ap3">0%</span>
+              </div>
+              <div class="alloc-row">
+                <span class="alloc-proj">Project C</span>
+                <div class="alloc-track"><div class="alloc-fill" id="af4" style="background:#7c5cbf"></div></div>
+                <span class="alloc-pct" id="ap4">0%</span>
+              </div>
+            </div>
+
+            <div class="r-section-label" style="margin-top:4px">Monthly forecast — may_2025_forecast.xlsx</div>
+
+            <div class="ss-window" id="ss-window">
+              <div class="ss-bar">
+                <i class="ti ti-file-spreadsheet"></i>
+                <span class="ss-bar-title">may_2025_forecast.xlsx · Project Hours</span>
+                <span class="ss-bar-dl"><i class="ti ti-download" style="font-size:9px"></i> download</span>
+              </div>
+              <table class="ss-table">
+                <thead>
+                  <tr class="visible" id="sr0">
+                    <th>Project</th>
+                    <th>Jan (act)</th>
+                    <th>Feb (act)</th>
+                    <th>Mar (act)</th>
+                    <th>Apr (act)</th>
+                    <th class="ss-forecast-hdr">May (fcst)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="sr1">
+                    <td>Project A</td>
+                    <td>812</td>
+                    <td>790</td>
+                    <td>846</td>
+                    <td>828</td>
+                    <td class="ss-forecast-col">864</td>
+                  </tr>
+                  <tr id="sr2">
+                    <td>Project B</td>
+                    <td>310</td>
+                    <td>288</td>
+                    <td>172</td>
+                    <td>96</td>
+                    <td class="ss-forecast-col">64</td>
+                  </tr>
+                  <tr id="sr3">
+                    <td>Project C</td>
+                    <td>0</td>
+                    <td>44</td>
+                    <td>110</td>
+                    <td>178</td>
+                    <td class="ss-forecast-col">192</td>
+                  </tr>
+                  <tr class="ss-total-row" id="sr4">
+                    <td>Total</td>
+                    <td>1,122</td>
+                    <td>1,122</td>
+                    <td>1,128</td>
+                    <td>1,102</td>
+                    <td class="ss-forecast-col">1,120</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>built with GitHub Copilot · MCP · Jira · portfolio demo</footer>
+
+<script>
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function addBubble(cfg) {
+  const log = document.getElementById('chat');
+  const b = document.createElement('div');
+  b.className = 'bubble ' + cfg.type;
+  if (cfg.typing) {
+    b.innerHTML = '<span class="typing"><span></span><span></span><span></span></span>';
+    log.appendChild(b);
+    requestAnimationFrame(function() { requestAnimationFrame(function() { b.classList.add('visible'); }); });
+    await wait(cfg.delay || 1100);
+    b.textContent = cfg.text;
+    return;
+  }
+  b.textContent = cfg.text;
+  log.appendChild(b);
+  requestAnimationFrame(function() { requestAnimationFrame(function() { b.classList.add('visible'); }); });
+  await wait(300);
+}
+
+async function addSkills(skills) {
+  const log = document.getElementById('chat');
+  const wrap = document.createElement('div');
+  wrap.className = 'skill-log';
+  skills.forEach(function(s) {
+    const row = document.createElement('div');
+    row.className = 'skill-row';
+    row.innerHTML = '<i class="ti ' + s.icon + '"></i><span>' + s.name + '</span><span class="skill-status sk-' + s.status + '">' + s.label + '</span>';
+    wrap.appendChild(row);
+  });
+  const b = document.createElement('div');
+  b.className = 'bubble agent';
+  b.style.maxWidth = '100%';
+  b.appendChild(wrap);
+  log.appendChild(b);
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      b.classList.add('visible');
+      var rows = wrap.querySelectorAll('.skill-row');
+      rows.forEach(function(r, i) {
+        setTimeout(function() { r.classList.add('visible'); }, i * 200);
+      });
+    });
+  });
+  await wait(500 + skills.length * 200);
+}
+
+async function runDemo() {
+  document.getElementById('runBtn').disabled = true;
+  document.getElementById('stepDesc').textContent = 'running...';
+
+  await addBubble({ type: 'user', text: 'Generate the monthly financial forecast for May' });
+  await wait(600);
+  await addBubble({ type: 'agent', text: 'On it. Quick check first — any material change in headcount since the April forecast? If not, I\'ll use finance\'s capacity assumptions from previous forecast averages.', typing: true, delay: 1300 });
+  await wait(900);
+  await addBubble({ type: 'user', text: 'No change' });
+  await wait(600);
+  await addBubble({ type: 'agent', text: 'Confirmed — using prior capacity averages. Running the forecast skills now...', typing: true, delay: 1000 });
+  await wait(400);
+
+  document.getElementById('stepDesc').textContent = 'skills running...';
+
+  await addSkills([
+    { icon: 'ti-table-import', name: 'jira-filter ingest', status: 'run', label: 'reading' },
+    { icon: 'ti-database', name: 'hrs-per-point skill', status: 'cache', label: 'MCP cached' },
+    { icon: 'ti-users', name: 'capacity skill', status: 'run', label: 'running' }
+  ]);
+
+  await wait(1200);
+
+  await addSkills([
+    { icon: 'ti-table-import', name: 'jira-filter ingest', status: 'done', label: '80 stories' },
+    { icon: 'ti-database', name: 'hrs-per-point skill', status: 'done', label: '11.2 / 9.8 hrs' },
+    { icon: 'ti-users', name: 'capacity skill', status: 'done', label: '1,120 hrs' }
+  ]);
+
+  await wait(800);
+  await addBubble({ type: 'agent', text: 'Remaining effort calculated. Allocating capacity proportional to incomplete story points per project...', typing: true, delay: 1100 });
+
+  // Show allocation panel
+  document.getElementById('stepDesc').textContent = 'allocating capacity...';
+  document.getElementById('calc-placeholder').style.display = 'none';
+  const cc = document.getElementById('calc-content');
+  cc.classList.add('visible');
+
+  await wait(300);
+  document.getElementById('ac1').classList.add('visible');
+  await wait(400);
+  document.getElementById('af1').style.width = '90%';
+  document.getElementById('af2').style.width = '10%';
+  animatePct('ap1', 90, 900);
+  animatePct('ap2', 10, 900);
+
+  await wait(1100);
+  document.getElementById('ac2').classList.add('visible');
+  await wait(400);
+  document.getElementById('af3').style.width = '60%';
+  document.getElementById('af4').style.width = '40%';
+  animatePct('ap3', 60, 900);
+  animatePct('ap4', 40, 900);
+
+  await wait(1300);
+
+  // Spreadsheet output
+  document.getElementById('stepDesc').textContent = 'writing forecast spreadsheet...';
+  document.getElementById('ss-window').classList.add('visible');
+  await wait(400);
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('sr' + i);
+    if (el) el.classList.add('visible');
+    await wait(300);
+  }
+
+  await wait(600);
+  await addBubble({ type: 'agent', text: 'May forecast complete. 1,120 total hours: Project A 864 (up slightly on its Jan–Apr trend), Project B 64 (winding down as expected), Project C 192 (continuing its ramp). Spreadsheet is ready for finance — Jan–Apr actuals with May forecast in the same format as prior months.' });
+
+  document.getElementById('stepDesc').textContent = 'forecast generated — monthly spreadsheet ready for finance';
+  document.getElementById('runBtn').innerHTML = '<i class="ti ti-check" style="font-size:13px"></i> Done';
+}
+
+function animatePct(elId, to, duration) {
+  const el = document.getElementById(elId);
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = Math.round(to * p) + '%';
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function resetDemo() {
+  document.getElementById('chat').innerHTML = '';
+  document.getElementById('calc-placeholder').style.display = 'flex';
+  const cc = document.getElementById('calc-content');
+  cc.classList.remove('visible');
+  ['ac1','ac2','ss-window'].forEach(function(id) { document.getElementById(id).classList.remove('visible'); });
+  ['af1','af2','af3','af4'].forEach(function(id) { document.getElementById(id).style.width = '0%'; });
+  ['ap1','ap2','ap3','ap4'].forEach(function(id) { document.getElementById(id).textContent = '0%'; });
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('sr' + i);
+    if (el) el.classList.remove('visible');
+  }
+  const btn = document.getElementById('runBtn');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-player-play" style="font-size:13px"></i> Run demo';
+  document.getElementById('stepDesc').textContent = 'click "run demo" to begin';
+}
+</script>
+</body>
+</html>
